@@ -5,8 +5,14 @@ use App\Http\Controllers\SeriesController;
 
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/series');
 });
 
-Route::get('/series', [SeriesController::class, 'index']);
-Route::get('/nova-serie', [SeriesController::class, 'create']);
+Route::controller(SeriesController::class)->group(function (){
+    Route::get('/series', 'index');
+    Route::get('series/criar', 'create')->name('series.create');
+    Route::post('/series/salvar', 'store');
+});
+
+
+

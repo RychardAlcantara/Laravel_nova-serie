@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Series;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SeriesController extends Controller
 {
@@ -11,11 +13,10 @@ class SeriesController extends Controller
      */
     public function index()
     {
-        $series = [
-            'Punisher',
-            'Lost',
-            'Grey\'s Anatomy',
-        ];
+
+        $series = Series::all();
+           
+        
 
         return view('series.index')->with('series', $series);
     }
@@ -33,9 +34,17 @@ class SeriesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store()
+    public function store(Request $request)
     {
-        //
+        $nomeSerie=$request->input('nome');
+        $series = new Series();
+        $series->nome = $nomeSerie;
+        $series->save();
+
+        
+        return redirect ('/series');
+        
+            
     }
 
     /**
